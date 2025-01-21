@@ -190,6 +190,13 @@ public class ExampleSignatureCreation {
     }
 }
 ```
+## Java 8 Migration and deploy to local maven
+- Clean the project
+`gradle clean`
+- build without test as we did not migrate test classes to Java8
+`gradle build -x test`
+- Publish the artifact to local maven repo
+`gradle publishToMavenLocal`
 
 ## Support
 
