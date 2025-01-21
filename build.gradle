@@ -1,9 +1,10 @@
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
@@ -29,10 +30,12 @@ javadoc {
 }
 
 signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications
+    if (project.hasProperty('signing.keyId')) {
+        // Configure signing if needed
+    } else {
+        // Disable the signing task
+        tasks.withType(Sign).each { it.enabled = false }
+    }
 }
 
 publishing {

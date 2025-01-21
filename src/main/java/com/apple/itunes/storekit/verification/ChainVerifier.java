@@ -25,6 +25,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChainVerifier {
     private static final int EXPECTED_CHAIN_LENGTH = 3;
@@ -106,7 +108,7 @@ public class ChainVerifier {
             parameters.setDate(effectiveDate);
             if (performRevocationChecking) {
                 PKIXRevocationChecker revocationChecker = (PKIXRevocationChecker) certPathValidator.getRevocationChecker();
-                revocationChecker.setOptions(Set.of(PKIXRevocationChecker.Option.NO_FALLBACK));
+                revocationChecker.setOptions(Stream.of(PKIXRevocationChecker.Option.NO_FALLBACK).collect(Collectors.toCollection(HashSet::new)));
                 parameters.addCertPathChecker(revocationChecker);
             }
             parameters.addCertPathChecker(new AppleExtensionCertPathChecker());

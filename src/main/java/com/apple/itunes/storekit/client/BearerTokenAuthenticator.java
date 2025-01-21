@@ -50,7 +50,7 @@ public class BearerTokenAuthenticator implements BearerTokenAuthenticatorInterfa
                 .withExpiresAt(Instant.now().plus(ChronoUnit.MINUTES.getDuration().multipliedBy(5)))
                 .withIssuer(issuerId)
                 .withKeyId(keyId)
-                .withPayload(Map.of(BUNDLE_ID_KEY, bundleId))
+                .withPayload(MapBuilder.mapWithValues(BUNDLE_ID_KEY, bundleId))
                 .sign(Algorithm.ECDSA256(signingKey));
     }
 }

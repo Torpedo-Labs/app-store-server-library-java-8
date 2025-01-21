@@ -7,7 +7,10 @@ import java.security.cert.Certificate;
 import java.security.cert.PKIXCertPathChecker;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AppleExtensionCertPathChecker extends PKIXCertPathChecker {
 
@@ -38,7 +41,7 @@ public class AppleExtensionCertPathChecker extends PKIXCertPathChecker {
 
     @Override
     public Set<String> getSupportedExtensions() {
-        return Set.of(WWDR_INTERMEDIATE_OID, RECEIPT_SIGNER_OID);
+        return Stream.of(WWDR_INTERMEDIATE_OID, RECEIPT_SIGNER_OID).collect(Collectors.toCollection(HashSet::new));
     }
 
     @Override
